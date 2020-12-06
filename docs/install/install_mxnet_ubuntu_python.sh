@@ -26,8 +26,8 @@
 ######################################################################
 
 set -ex
-sudo apt-get update
-sudo apt-get install -y \
+apt-get update
+apt-get install -y \
     apt-transport-https \
     build-essential \
     ca-certificates \
@@ -51,12 +51,9 @@ sudo apt-get install -y \
     wget
 
 wget -nv https://bootstrap.pypa.io/get-pip.py
-echo "Installing for Python 3..."
-sudo python3 get-pip.py
-pip3 install --user -r requirements.txt
-echo "Installing for Python 2..."
-sudo python2 get-pip.py
-pip2 install --user -r requirements.txt
+echo "Installing for Python ..."
+python get-pip.py
+pip install --user -r requirements.txt
 
 cd ../../
 
