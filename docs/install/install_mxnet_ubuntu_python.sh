@@ -32,6 +32,7 @@ apt-get install -y \
     ca-certificates \
     cmake \
     curl \
+    git \
     libatlas-base-dev \
     libcurl4-openssl-dev \
     libjemalloc-dev \
@@ -40,13 +41,21 @@ apt-get install -y \
     libopencv-dev \
     libzmq3-dev \
     ninja-build \
+    python-dev \
+    python3-dev \
     software-properties-common \
     sudo \
     unzip \
-    virtualenv
+    virtualenv \
+    wget
 
-echo "Installing for Python ..."
-pip install --user -r requirements.txt
+wget -nv https://bootstrap.pypa.io/get-pip.py
+echo "Installing for Python 3..."
+sudo python3 get-pip.py
+pip3 install --user -r requirements.txt
+echo "Installing for Python 2..."
+sudo python2 get-pip.py
+pip2 install --user -r requirements.txt
 
 cd ../../
 
