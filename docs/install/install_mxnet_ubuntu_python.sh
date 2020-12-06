@@ -29,11 +29,9 @@ set -ex
 apt-get update
 apt-get install -y \
     apt-transport-https \
-    build-essential \
     ca-certificates \
     cmake \
     curl \
-    git \
     libatlas-base-dev \
     libcurl4-openssl-dev \
     libjemalloc-dev \
@@ -42,17 +40,12 @@ apt-get install -y \
     libopencv-dev \
     libzmq3-dev \
     ninja-build \
-    python-dev \
-    python3-dev \
     software-properties-common \
     sudo \
     unzip \
-    virtualenv \
-    wget
+    virtualenv
 
-wget -nv https://bootstrap.pypa.io/get-pip.py
 echo "Installing for Python ..."
-python get-pip.py
 pip install --user -r requirements.txt
 
 cd ../../
