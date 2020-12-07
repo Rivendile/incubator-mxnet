@@ -66,7 +66,7 @@ if [ "$gpu_install" = "0" ]; then
     make_params="USE_OPENCV=1 USE_BLAS=openblas"
     echo "nvidia-smi not found. Installing in CPU-only mode with these build flags: $make_params"
 else
-    make_params="USE_OPENCV=1 USE_BLAS=openblas USE_CUDA=1 USE_CUDA_PATH=/usr/local/cuda USE_CUDNN=1"
+    make_params="USE_DIST_KVSTOE=1 USE_OPENCV=1 USE_BLAS=openblas USE_CUDA=1 USE_CUDA_PATH=/usr/local/cuda USE_CUDNN=1"
     echo "nvidia-smi found! Installing with CUDA and cuDNN support with these build flags: $make_params"
 fi
 
