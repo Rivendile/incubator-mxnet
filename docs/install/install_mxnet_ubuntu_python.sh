@@ -71,4 +71,4 @@ echo "nvidia-smi found! Installing with CUDA and cuDNN support with these build 
 #fi
 
 echo "Building MXNet core. This can take few minutes..."
-make -j $(nproc) $make_params
+make -j $(nproc) 
