@@ -68,8 +68,8 @@ USE_CUDA = 1
 
 # add the path to CUDA library to link and compile flag
 # if you have already add them to environment variable, leave it as NONE
-# USE_CUDA_PATH = /usr/local/cuda
-USE_CUDA_PATH = $(DEPS_PATH)/usr/local/cuda-10.0
+USE_CUDA_PATH = /usr/local/cuda
+# USE_CUDA_PATH = $(DEPS_PATH)/usr/local/cuda-10.0
 
 # whether to use CuDNN library
 USE_CUDNN = 1
