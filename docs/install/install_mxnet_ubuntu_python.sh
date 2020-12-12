@@ -58,6 +58,17 @@ echo "Installing for Python 2..."
 python2 get-pip.py
 pip2 install --user -r requirements.txt
 
+apt-get install autoconf automake libtool nasm
+JPEG_TURBO_VERSION=1.5.2 && \
+wget -q -O - https://github.com/libjpeg-turbo/libjpeg-turbo/archive/${JPEG_TURBO_VERSION}.tar.gz | tar -xzf - && \
+cd libjpeg-turbo-${JPEG_TURBO_VERSION} && \
+autoreconf -fiv && \
+./configure --enable-shared --prefix=/usr 2>&1 >/dev/null && \
+make -j"$(nproc)" install 2>&1 >/dev/null && \
+rm -rf libjpeg-turbo-${JPEG_TURBO_VERSION}
+
+cd ..
+
 cd ../../
 
 echo "Building MXNet core. This can take few minutes..."
