@@ -48,7 +48,7 @@ apt-get install -y \
     sudo \
     unzip \
     virtualenv \
-    wget autoconf automake libtool nasm
+    wget autoconf automake libtool nasm libturbojpeg
     
 wget -nv https://bootstrap.pypa.io/get-pip.py
 echo "Installing for Python 3..."
