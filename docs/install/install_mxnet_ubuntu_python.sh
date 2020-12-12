@@ -60,7 +60,5 @@ pip2 install --user -r requirements.txt
 
 cd ../../
 
-apt-get install autoconf automake libtool nasm
-
 echo "Building MXNet core. This can take few minutes..."
 make -j $(nproc) 
