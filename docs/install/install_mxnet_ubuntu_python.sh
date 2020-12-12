@@ -60,15 +60,14 @@ pip2 install --user -r requirements.txt
 
 cd ../../
 
-echo "Checking for GPUs..."
-gpu_install=$(which nvidia-smi | wc -l)
-#if [ "$gpu_install" = "0" ]; then
-#    make_params="USE_OPENCV=1 USE_BLAS=openblas"
-#    echo "nvidia-smi not found. Installing in CPU-only mode with these build flags: $make_params"
-#else
-make_params="USE_DIST_KVSTOE=1 USE_OPENCV=1 USE_BLAS=openblas USE_CUDA=1 USE_CUDA_PATH=/usr/local/cuda USE_CUDNN=1"
-echo "nvidia-smi found! Installing with CUDA and cuDNN support with these build flags: $make_params"
-#fi
+apt-get install autoconf automake libtool nasm
+JPEG_TURBO_VERSION=1.5.2 && \
+wget -q -O - https://github.com/libjpeg-turbo/libjpeg-turbo/archive/${JPEG_TURBO_VERSION}.tar.gz | tar -xzf - && \
+cd libjpeg-turbo-${JPEG_TURBO_VERSION} && \
+autoreconf -fiv && \
+./configure --enable-shared --prefix=/usr 2>&1 >/dev/null && \
+make -j"$(nproc)" install 2>&1 >/dev/null && \
+rm -rf libjpeg-turbo-${JPEG_TURBO_VERSION}
 
 echo "Building MXNet core. This can take few minutes..."
 make -j $(nproc) 
