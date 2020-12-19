@@ -546,7 +546,7 @@ class KVStoreDist : public KVStoreLocal {
       if (num_arr_elems < bigarray_bound_) {
         // send it to a single random picked server
         int server = (key * 9973) % num_servers;
-        LOG(INFO)<<key<<" used server: "<<server;
+        LOG(INFO)<<"EncodeDefaultKey: "<<key<<" used server: "<<server;
         ps::Key ps_key = krs[server].begin() + key;
         CHECK_LT(ps_key, krs[server].end());
         pskv.keys.push_back(ps_key);
@@ -612,7 +612,7 @@ class KVStoreDist : public KVStoreLocal {
         // a simple heuristic for load balancing
         // send it to a single random picked server
         const int server = (key * 9973) % num_servers;
-        LOG(INFO)<<key<<" used server: "<<server;
+        LOG(INFO)<<"EncodeCompressedKey: "<<key<<" used server: "<<server;
         ps::Key ps_key = krs[server].begin() + key;
         CHECK_LT(ps_key, krs[server].end());
         // meta info
@@ -719,7 +719,7 @@ class KVStoreDist : public KVStoreLocal {
     } else {
       // send it to a single random picked server
       const int server = (key * 9973) % num_servers;
-        LOG(INFO)<<key<<" used server: "<<server;
+        LOG(INFO)<<"EncodeRowSparseKey: "<<key<<" used server: "<<server;
       ps::Key master_key = krs[server].begin() + key;
       pskv.keys.push_back(master_key);
       pskv.lens.push_back(0);
