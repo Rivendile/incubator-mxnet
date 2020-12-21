@@ -32,6 +32,7 @@
 #include "mxnet/engine.h"
 #include "ps/ps.h"
 #include "./kvstore_dist_server.h"
+#include <time.h>
 namespace mxnet {
 namespace kvstore {
 
@@ -409,6 +410,7 @@ class KVStoreDist : public KVStoreLocal {
   }
 
   void PushDefault(int key, const NDArray &send_buf, const PSKV& pskv, int priority) {
+    LOG(INFO)<<"Enter PushDefault: "<<(double)clock()/CLOCKS_PER_SEC<<" "<<key;
     auto push_to_servers =
         [this, key, pskv, send_buf](RunContext rctx, Engine::CallbackOnComplete cb) {
           const int dtype = send_buf.dtype();
@@ -430,6 +432,7 @@ class KVStoreDist : public KVStoreLocal {
         FnProperty::kNormal,
         priority,
         "KVStoreDistDefaultPush");
+    LOG(INFO)<<"Exit PushDefault: "<<(double)clock()/CLOCKS_PER_SEC<<" "<<key;
   }
 
   // push row sparse gradient

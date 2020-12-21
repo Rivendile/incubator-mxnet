@@ -32,6 +32,7 @@
 #include "./thread_pool.h"
 #include "../common/lazy_alloc_array.h"
 #include "../common/utils.h"
+#include <time.h>
 
 namespace mxnet {
 namespace engine {
@@ -91,6 +92,7 @@ class ThreadedEnginePerDevice : public ThreadedEngine {
 
  protected:
   void PushToExecute(OprBlock *opr_block, bool pusher_thread) override {
+    LOG(INFO)<<"Enter ThreadedEnginePerdevice::PushToExecute "<<(double)clock()/CLOCKS_PER_SEC;
     const Context& ctx = opr_block->ctx;
     if ((opr_block->opr->prop == FnProperty::kAsync ||
          opr_block->opr->prop == FnProperty::kDeleteVar) && pusher_thread) {
@@ -196,6 +198,7 @@ class ThreadedEnginePerDevice : public ThreadedEngine {
         }
       }
     }
+    LOG(INFO)<<"Exit ThreadedEnginePerdevice::PushToExecute "<<(double)clock()/CLOCKS_PER_SEC;
   }
 
  private:
