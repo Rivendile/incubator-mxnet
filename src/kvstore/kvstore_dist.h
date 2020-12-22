@@ -410,8 +410,11 @@ class KVStoreDist : public KVStoreLocal {
   }
 
   void PushDefault(int key, const NDArray &send_buf, const PSKV& pskv, int priority) {
-      double time_st = (double)clock();
-    LOG(INFO)<<"Enter PushDefault: "<<time_st/CLOCKS_PER_SEC<<" "<<key;
+    double time_st = (double)clock();
+    if (ps::Postoffice::Get()->verbose()>=3){
+      LOG(INFO)<<"Enter PushDefault: "<<time_st/CLOCKS_PER_SEC<<" "<<key;
+    }
+      
     auto push_to_servers =
         [this, key, pskv, send_buf](RunContext rctx, Engine::CallbackOnComplete cb) {
           const int dtype = send_buf.dtype();
@@ -433,8 +436,11 @@ class KVStoreDist : public KVStoreLocal {
         FnProperty::kNormal,
         priority,
         "KVStoreDistDefaultPush");
+      
+    if (ps::Postoffice::Get()->verbose()>=3){
       double time_end = (double)clock();
-    LOG(INFO)<<"Exit PushDefault: "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC<<" "<<key;
+      LOG(INFO)<<"Exit PushDefault: "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC<<" "<<key;
+    }
   }
 
   // push row sparse gradient

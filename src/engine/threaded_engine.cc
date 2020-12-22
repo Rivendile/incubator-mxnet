@@ -32,6 +32,7 @@
 #include "./threaded_engine.h"
 #include "../common/cuda_utils.h"
 #include <time.h>
+#include "ps/ps.h"
 
 namespace mxnet {
 namespace engine {
@@ -287,8 +288,10 @@ void ThreadedEngine::DeleteOperator(OprHandle op) {
 }
 
 void ThreadedEngine::Push(OprHandle op, Context exec_ctx, int priority, bool profiling) {
-    double time_st = (double)clock();
-  LOG(INFO)<<"Enter ThreadedEngine::Push: "<<time_st/CLOCKS_PER_SEC;
+  double time_st = (double)clock();
+  if (ps::Postoffice::Get()->verbose()>=3){
+    LOG(INFO)<<"Enter ThreadedEngine::Push: "<<time_st/CLOCKS_PER_SEC;
+  }
   BulkFlush();
 
   ThreadedOpr* threaded_opr = ThreadedOpr::CastFromBase(op);
@@ -313,8 +316,10 @@ void ThreadedEngine::Push(OprHandle op, Context exec_ctx, int priority, bool pro
   if (opr_block->decr_wait() == 0) {
     this->PushToExecute(opr_block, true);
   }
+  if (ps::Postoffice::Get()->verbose()>=3){
     double time_end = (double)clock();
-  LOG(INFO)<<"Exit ThreadedEngine::Push: "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC;
+    LOG(INFO)<<"Exit ThreadedEngine::Push: "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC;
+  }
 }
 
 void ThreadedEngine::PushAsync(AsyncFn fn, Context exec_ctx,
@@ -325,7 +330,10 @@ void ThreadedEngine::PushAsync(AsyncFn fn, Context exec_ctx,
                                const char* opr_name,
                                bool wait) {
     double time_st = (double)clock();
-    LOG(INFO)<<"Enter ThreadedEngine::PushAsync: "<<time_st/CLOCKS_PER_SEC;
+    if (ps::Postoffice::Get()->verbose()>=3){
+      LOG(INFO)<<"Enter ThreadedEngine::PushAsync: "<<time_st/CLOCKS_PER_SEC;
+    }
+    
 #if MXNET_USE_CUDA
   if (exec_ctx.dev_mask() == gpu::kDevMask) {
     if (device_count_ < 0) {
@@ -344,8 +352,10 @@ void ThreadedEngine::PushAsync(AsyncFn fn, Context exec_ctx,
   opr->temporary = true;
   const bool profiling = profiler_->IsProfiling(profiler::Profiler::kImperative);
   Push(opr, exec_ctx, priority, profiling);
+  if (ps::Postoffice::Get()->verbose()>=3){
     double time_end = (double)clock();
-  LOG(INFO)<<"Exit ThreadedEngine::PushAsync: "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC;
+    LOG(INFO)<<"Exit ThreadedEngine::PushAsync: "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC;
+  }
 }
 
 void ThreadedEngine::PushSync(SyncFn exec_fn, Context exec_ctx,
