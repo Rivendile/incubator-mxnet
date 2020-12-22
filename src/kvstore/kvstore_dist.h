@@ -411,7 +411,7 @@ class KVStoreDist : public KVStoreLocal {
 
   void PushDefault(int key, const NDArray &send_buf, const PSKV& pskv, int priority) {
     double time_st = (double)clock();
-    if (ps::Postoffice::Get()->verbose()>=3){
+    if (ps::Postoffice::Get()->verbose()>=2){
       LOG(INFO)<<"Enter PushDefault: "<<time_st/CLOCKS_PER_SEC<<" "<<key;
     }
       
@@ -437,7 +437,7 @@ class KVStoreDist : public KVStoreLocal {
         priority,
         "KVStoreDistDefaultPush");
       
-    if (ps::Postoffice::Get()->verbose()>=3){
+    if (ps::Postoffice::Get()->verbose()>=2){
       double time_end = (double)clock();
       LOG(INFO)<<"Exit PushDefault: "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC<<" "<<key;
     }

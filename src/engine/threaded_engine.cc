@@ -289,7 +289,7 @@ void ThreadedEngine::DeleteOperator(OprHandle op) {
 
 void ThreadedEngine::Push(OprHandle op, Context exec_ctx, int priority, bool profiling) {
   double time_st = (double)clock();
-  if (ps::Postoffice::Get()->verbose()>=3){
+  if (ps::Postoffice::Get()->verbose()>=2){
     LOG(INFO)<<"Enter ThreadedEngine::Push: "<<time_st/CLOCKS_PER_SEC;
   }
   BulkFlush();
@@ -316,7 +316,7 @@ void ThreadedEngine::Push(OprHandle op, Context exec_ctx, int priority, bool pro
   if (opr_block->decr_wait() == 0) {
     this->PushToExecute(opr_block, true);
   }
-  if (ps::Postoffice::Get()->verbose()>=3){
+  if (ps::Postoffice::Get()->verbose()>=2){
     double time_end = (double)clock();
     LOG(INFO)<<"Exit ThreadedEngine::Push: "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC;
   }
@@ -330,7 +330,7 @@ void ThreadedEngine::PushAsync(AsyncFn fn, Context exec_ctx,
                                const char* opr_name,
                                bool wait) {
     double time_st = (double)clock();
-    if (ps::Postoffice::Get()->verbose()>=3){
+    if (ps::Postoffice::Get()->verbose()>=2){
       LOG(INFO)<<"Enter ThreadedEngine::PushAsync: "<<time_st/CLOCKS_PER_SEC;
     }
     
@@ -352,7 +352,7 @@ void ThreadedEngine::PushAsync(AsyncFn fn, Context exec_ctx,
   opr->temporary = true;
   const bool profiling = profiler_->IsProfiling(profiler::Profiler::kImperative);
   Push(opr, exec_ctx, priority, profiling);
-  if (ps::Postoffice::Get()->verbose()>=3){
+  if (ps::Postoffice::Get()->verbose()>=2){
     double time_end = (double)clock();
     LOG(INFO)<<"Exit ThreadedEngine::PushAsync: "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC;
   }

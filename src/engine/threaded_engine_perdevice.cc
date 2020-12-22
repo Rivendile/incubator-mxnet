@@ -94,7 +94,7 @@ class ThreadedEnginePerDevice : public ThreadedEngine {
  protected:
   void PushToExecute(OprBlock *opr_block, bool pusher_thread) override {
     double time_st = (double)clock();
-    if (ps::Postoffice::Get()->verbose()>=3){
+    if (ps::Postoffice::Get()->verbose()>=2){
       LOG(INFO)<<"Enter ThreadedEnginePerdevice::PushToExecute "<<time_st/CLOCKS_PER_SEC;
     }
       
@@ -203,7 +203,7 @@ class ThreadedEnginePerDevice : public ThreadedEngine {
         }
       }
     }
-    if (ps::Postoffice::Get()->verbose()>=3){
+    if (ps::Postoffice::Get()->verbose()>=2){
       double time_end = (double)clock();
       LOG(INFO)<<"Exit ThreadedEnginePerdevice::PushToExecute "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC;
     }
