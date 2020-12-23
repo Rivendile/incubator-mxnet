@@ -557,7 +557,7 @@ class KVStoreDist : public KVStoreLocal {
       if (num_arr_elems < bigarray_bound_) {
         // send it to a single random picked server
         int server = (key * 9973) % num_servers;
-        LOG(INFO)<<"EncodeDefaultKey: "<<key<<" used server: "<<server;
+//        LOG(INFO)<<"EncodeDefaultKey: "<<key<<" used server: "<<server;
         ps::Key ps_key = krs[server].begin() + key;
         CHECK_LT(ps_key, krs[server].end());
         pskv.keys.push_back(ps_key);
