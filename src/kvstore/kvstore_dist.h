@@ -569,7 +569,7 @@ class KVStoreDist : public KVStoreLocal {
             if (server>=num_servers)
                 server = num_servers - 1;
         }
-        LOG(INFO)<<"EncodeDefaultKey: "<<key<<" used server: "<<server;
+//        LOG(INFO)<<"EncodeDefaultKey: "<<key<<" used server: "<<server;
         ps::Key ps_key = krs[server].begin() + key;
         CHECK_LT(ps_key, krs[server].end());
         pskv.keys.push_back(ps_key);
@@ -647,7 +647,7 @@ class KVStoreDist : public KVStoreLocal {
           if (server>=num_servers)
               server = num_servers - 1;
         }
-        LOG(INFO)<<"EncodeCompressedKey: "<<key<<" used server: "<<server;
+//        LOG(INFO)<<"EncodeCompressedKey: "<<key<<" used server: "<<server;
         ps::Key ps_key = krs[server].begin() + key;
         CHECK_LT(ps_key, krs[server].end());
         // meta info
@@ -766,7 +766,7 @@ class KVStoreDist : public KVStoreLocal {
             if (server>=num_servers)
                 server = num_servers - 1;
         }
-        LOG(INFO)<<"EncodeRowSparseKey: "<<key<<" used server: "<<server;
+//        LOG(INFO)<<"EncodeRowSparseKey: "<<key<<" used server: "<<server;
       ps::Key master_key = krs[server].begin() + key;
       pskv.keys.push_back(master_key);
       pskv.lens.push_back(0);
