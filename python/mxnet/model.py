@@ -124,7 +124,7 @@ def _initialize_kvstore(kvstore, param_arrays, arg_params, param_names, update_o
         name = param_names[idx]
         kvstore.init(name, arg_params[name])
             
-        print(idx, name, arg_params[name].shape)
+#        print(idx, name, arg_params[name].shape)
         
         if update_on_kvstore:
             kvstore.pull(name, param_on_devs, priority=-idx)
