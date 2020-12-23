@@ -93,10 +93,10 @@ class ThreadedEnginePerDevice : public ThreadedEngine {
 
  protected:
   void PushToExecute(OprBlock *opr_block, bool pusher_thread) override {
-    double time_st = (double)clock();
-    if (ps::Postoffice::Get()->verbose()>=2){
-      LOG(INFO)<<"Enter ThreadedEnginePerdevice::PushToExecute "<<time_st/CLOCKS_PER_SEC;
-    }
+//    double time_st = (double)clock();
+//    if (ps::Postoffice::Get()->verbose()>=2){
+//      LOG(INFO)<<"Enter ThreadedEnginePerdevice::PushToExecute "<<time_st/CLOCKS_PER_SEC;
+//    }
       
     const Context& ctx = opr_block->ctx;
     if ((opr_block->opr->prop == FnProperty::kAsync ||
@@ -203,10 +203,10 @@ class ThreadedEnginePerDevice : public ThreadedEngine {
         }
       }
     }
-    if (ps::Postoffice::Get()->verbose()>=2){
-      double time_end = (double)clock();
-      LOG(INFO)<<"Exit ThreadedEnginePerdevice::PushToExecute "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC;
-    }
+//    if (ps::Postoffice::Get()->verbose()>=2){
+//      double time_end = (double)clock();
+//      LOG(INFO)<<"Exit ThreadedEnginePerdevice::PushToExecute "<<time_end/CLOCKS_PER_SEC<<" "<<(time_end-time_st)/CLOCKS_PER_SEC;
+//    }
   }
 
  private:
