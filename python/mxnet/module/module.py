@@ -663,6 +663,8 @@ class Module(BaseModule):
         ----------
         :meth:`BaseModule.update`.
         """
+        print("before update")
+        
         assert self.binded and self.params_initialized and self.optimizer_initialized
 
         self._params_dirty = True
@@ -677,6 +679,8 @@ class Module(BaseModule):
                            num_device=len(self._context),
                            kvstore=self._kvstore,
                            param_names=self._exec_group.param_names)
+        
+        print("after update")
 
     def get_outputs(self, merge_multi_context=True):
         """Gets outputs of the previous forward computation.
