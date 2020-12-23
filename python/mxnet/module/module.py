@@ -541,12 +541,18 @@ class Module(BaseModule):
                 kvstore.set_gradient_compression(self._compression_params)
             if update_on_kvstore:
                 kvstore.set_optimizer(self._optimizer)
+            
+            print("before _initialize_kvstore")
+            
             # copy initialized local parameters to kvstore
             _initialize_kvstore(kvstore=kvstore,
                                 param_arrays=self._exec_group.param_arrays,
                                 arg_params=self._arg_params,
                                 param_names=self._param_names,
                                 update_on_kvstore=update_on_kvstore)
+            
+            print("after _initialize_kvstore")
+            exit()
 
         if not update_on_kvstore:
             self._updater = opt.get_updater(optimizer)
