@@ -556,8 +556,20 @@ class KVStoreDist : public KVStoreLocal {
       // a simple heuristic for load balance
       if (num_arr_elems < bigarray_bound_) {
         // send it to a single random picked server
-        int server = (key * 9973) % num_servers;
-//        LOG(INFO)<<"EncodeDefaultKey: "<<key<<" used server: "<<server;
+        int map_kind = dmlc::GetEnv("KVSTORE_MAP_KIND", 0);
+        int server = 0;
+        if (map_kind == 1)
+            server = (key * 9973) % num_servers;
+        else if (map_kind == 2){
+            int model_kind = dmlc::GetEnv("KVSTORE_MAP_MODEL", 0);
+            int model_cnt = 157;
+            if (model_kind == 1)
+                model_cnt = 32;
+            server = key/(model_cnt/num_servers);
+            if (server>=num_servers)
+                server = num_servers - 1;
+        }
+        LOG(INFO)<<"EncodeDefaultKey: "<<key<<" used server: "<<server;
         ps::Key ps_key = krs[server].begin() + key;
         CHECK_LT(ps_key, krs[server].end());
         pskv.keys.push_back(ps_key);
@@ -622,7 +634,19 @@ class KVStoreDist : public KVStoreLocal {
       if (original_num_elem < bigarray_bound_) {
         // a simple heuristic for load balancing
         // send it to a single random picked server
-        const int server = (key * 9973) % num_servers;
+        int map_kind = dmlc::GetEnv("KVSTORE_MAP_KIND", 0);
+        int server = 0;
+        if (map_kind == 1)
+          server = (key * 9973) % num_servers;
+        else if (map_kind == 2){
+          int model_kind = dmlc::GetEnv("KVSTORE_MAP_MODEL", 0);
+          int model_cnt = 157;
+          if (model_kind == 1)
+              model_cnt = 32;
+          server = key/(model_cnt/num_servers);
+          if (server>=num_servers)
+              server = num_servers - 1;
+        }
         LOG(INFO)<<"EncodeCompressedKey: "<<key<<" used server: "<<server;
         ps::Key ps_key = krs[server].begin() + key;
         CHECK_LT(ps_key, krs[server].end());
@@ -729,7 +753,19 @@ class KVStoreDist : public KVStoreLocal {
       CHECK_EQ(static_cast<size_t>(pskv.size), num_elem * num_bytes);
     } else {
       // send it to a single random picked server
-      const int server = (key * 9973) % num_servers;
+        int map_kind = dmlc::GetEnv("KVSTORE_MAP_KIND", 0);
+        int server = 0;
+        if (map_kind == 1)
+            server = (key * 9973) % num_servers;
+        else if (map_kind == 2){
+            int model_kind = dmlc::GetEnv("KVSTORE_MAP_MODEL", 0);
+            int model_cnt = 157;
+            if (model_kind == 1)
+                model_cnt = 32;
+            server = key/(model_cnt/num_servers);
+            if (server>=num_servers)
+                server = num_servers - 1;
+        }
         LOG(INFO)<<"EncodeRowSparseKey: "<<key<<" used server: "<<server;
       ps::Key master_key = krs[server].begin() + key;
       pskv.keys.push_back(master_key);

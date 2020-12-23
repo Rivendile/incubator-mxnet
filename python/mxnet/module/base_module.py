@@ -522,16 +522,8 @@ class BaseModule(object):
                 data_batch = next_data_batch
                 if monitor is not None:
                     monitor.tic()
-                
-                print("before forward_backward", time.time())
-                
                 self.forward_backward(data_batch)
-                
-                print("after forward_backward", time.time())
-                
                 self.update()
-                
-                print("finish pudate", time.time())
 
                 if isinstance(data_batch, list):
                     self.update_metric(eval_metric,

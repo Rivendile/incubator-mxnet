@@ -26,7 +26,6 @@ import logging
 import warnings
 from collections import namedtuple
 import numpy as np
-import time
 
 from . import io
 from . import ndarray as nd
@@ -157,12 +156,12 @@ def _update_params_on_kvstore(param_arrays, grad_arrays, kvstore, param_names):
         if grad_list[0] is None:
             continue
         name = param_names[index]
-        print(name, "before", time.time())
+#        print(name, "before", time.time())
         # push gradient, priority is negative index
         kvstore.push(name, grad_list, priority=-index)
         # pull back the weights
         kvstore.pull(name, arg_list, priority=-index)
-        print(name, "after", time.time())
+#        print(name, "after", time.time())
 
 def _update_params(param_arrays, grad_arrays, updater, num_device,
                    kvstore=None, param_names=None):
